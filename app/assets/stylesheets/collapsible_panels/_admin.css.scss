@@ -1,0 +1,33 @@
+@import "sortable";
+
+#main_content {
+	> .panel, > form .inputs {
+		position: relative;
+		.panel_contents, > ol {
+			display: none;
+		}
+		.close-panel {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 6px;
+			text-decoration: none;
+			@include text-shadow(white 0 1px 0);
+			color: #5E6469;
+			font-weight: bold;
+			&:after {
+				content: "show";
+			}
+		}
+		&.visible {
+			.panel_contents, > ol {
+				display: block;
+			}
+			.close-panel {
+				&:after {
+					content: "hide";
+				}
+			}
+		}
+	}
+}

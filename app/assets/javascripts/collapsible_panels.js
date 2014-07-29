@@ -1,0 +1,1 @@
+//= require_tree collapsible_panels

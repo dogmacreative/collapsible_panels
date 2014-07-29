@@ -1,0 +1,61 @@
+.sortable {
+	ul {
+		list-style: none;
+		padding-left: 0;
+		margin-right: 0;
+		li {
+			background: #F4F4F4;
+			border: 1px solid #E8E8E8;
+			margin: 5px 0;
+			// width: 600px;
+			div.header {
+				padding: 5px;
+				height: 15px;
+				line-height: 15px;
+				position: relative;
+				div {
+					cursor: pointer;
+					text-align: center;
+					position: absolute;
+					top: 6px;
+					span {
+						@include inline-block;
+					}
+					&.actions {
+						right: 30px;
+					}
+					&.grip {
+						right: 5px;
+						span {
+							@include hide-text;
+							background: image-url("admin/grip.png") no-repeat center center;
+							height: 13px;
+							width: 15px;
+						}
+					}
+				}
+			}
+			div.form {
+				display: none;
+				padding: 10px;
+				margin: 10px;
+				border: 1px solid #E8E8E8;
+				@include border-radius;
+				fieldset, li {
+					background: transparent;
+					border: none 0;
+					@include box-shadow(inherit);
+				}
+			}
+			&.even {
+				// background: #F4F5F5;
+		
+			}
+			&.visible {
+				div.form {
+					display: block;
+				}
+			}
+		}
+	}
+}
