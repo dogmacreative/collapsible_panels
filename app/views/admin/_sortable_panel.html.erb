@@ -37,7 +37,7 @@
 			<% end %>
 		</ul>
 
-		<%= semantic_form_for [ :admin, klass.new ], namespace: "new" remote: true  do |f| %>
+		<%= semantic_form_for [ :admin, klass.new ], namespace: "new", remote: true  do |f| %>
 
 			<% unless polymorphic %>
 			<%= f.hidden_field "#{resource_class.name.underscore}_id".to_sym, value: resource.id, id: unique_id(p, "#{resource_class.name.underscore}_id") %>
