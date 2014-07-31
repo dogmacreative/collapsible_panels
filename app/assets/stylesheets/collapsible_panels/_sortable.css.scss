@@ -58,4 +58,17 @@
 			}
 		}
 	}
+	&[data-disable-sort] {
+		ul {
+			li {
+				div.header {
+					div {
+						&.grip {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,0 +1,62 @@
+<div class="sortable panel" data-model="<%= class_name %>"<%= " data-disable-sort" if disabled %>>
+	<% unless title.blank? %>
+	<h3>
+		<%= title %>
+	</h3>
+	<% end %>
+	<div class="panel_contents">
+		<ul>
+			<%
+				c = disabled ? collection : collection.positioned
+			%>
+			<% c.each_with_index do |r, i| %>
+			<li class="<%= i % 2 == 0 ? "odd" : "even" %>" id="sortable_<%= r.id %>">
+				<div class="header">
+					<span><%= r.send field %></span>
+
+					<div class="actions">
+						<%= link_to "delete", [ :admin, r ], remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
+						<a href="#" class="edit">edit</a>
+					</div>
+
+					<div class="grip">
+						<span>grip</span>
+					</div>
+				</div>
+
+				<div class="form">
+					<%= semantic_form_for [ :admin, r ], namespace: "edit_#{r.id}", remote: true do |f| %>
+
+						<%= render partial: "admin/#{pluralized_class}/fields", locals: { f: f, p: "#{p}-#{r.id}" } %>
+
+						<%= f.actions %>
+
+					<% end %>
+				</div>
+			</li>
+			<% end %>
+		</ul>
+
+		<%= semantic_form_for [ :admin, klass.new ], namespace: "new" remote: true  do |f| %>
+
+			<% unless polymorphic %>
+			<%= f.hidden_field "#{resource_class.name.underscore}_id".to_sym, value: resource.id, id: unique_id(p, "#{resource_class.name.underscore}_id") %>
+			<% else %>
+			<%= f.hidden_field "#{polymorphic.to_s}_id", value: resource.id, id: unique_id(p, "#{polymorphic.to_s}_id") %>
+			<%= f.hidden_field "#{polymorphic.to_s}_type", value: resource_class.name, id: unique_id(p, "#{polymorphic.to_s}_type") %>
+			<% end %>
+
+			<% unless disabled %>
+			<%= f.hidden_field :position, value: ( c.empty? ? 0 : c.map(&:position).max + 1 ), id: unique_id(p, :position) %>
+			<% end %>
+
+			<%= render partial: "admin/#{pluralized_class}/fields", locals: { f: f, p: p } %>
+
+			<%= f.actions %>
+
+		<% end %>
+
+	</div>
+</div>
+
+<%= render partial: "admin/#{pluralized_class}/edit_template", locals: { class_name: class_name, pluralized_class: pluralized_class } %>

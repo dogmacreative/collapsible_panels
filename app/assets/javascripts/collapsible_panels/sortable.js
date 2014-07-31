@@ -27,6 +27,7 @@ $(function() {
 
 			if ($sortable.length) {
 				$sortable
+					.not('data-disable-sort')
 					.disableSelection()
 					.sortable({
 						axis: 'y',
