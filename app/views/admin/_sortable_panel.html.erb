@@ -27,7 +27,7 @@
 				<div class="form">
 					<%= semantic_form_for [ :admin, r ], namespace: "edit_#{r.id}", remote: true do |f| %>
 
-						<%= render partial: "admin/#{pluralized_class}/fields", locals: { f: f, p: "#{p}-#{r.id}" } %>
+						<%= render partial: "admin/#{pluralized_class}/fields", locals: { f: f, p: "#{p}-#{r.id}", r: r } %>
 
 						<%= f.actions %>
 
@@ -37,7 +37,8 @@
 			<% end %>
 		</ul>
 
-		<%= semantic_form_for [ :admin, klass.new ], namespace: "new", remote: true  do |f| %>
+		<% r = klass.new %>
+		<%= semantic_form_for [ :admin, r ], namespace: "new", remote: true  do |f| %>
 
 			<% unless polymorphic %>
 			<%= f.hidden_field "#{resource_class.name.underscore}_id".to_sym, value: resource.id, id: unique_id(p, "#{resource_class.name.underscore}_id") %>
@@ -50,7 +51,7 @@
 			<%= f.hidden_field :position, value: ( c.empty? ? 0 : c.map(&:position).max + 1 ), id: unique_id(p, :position) %>
 			<% end %>
 
-			<%= render partial: "admin/#{pluralized_class}/fields", locals: { f: f, p: p } %>
+			<%= render partial: "admin/#{pluralized_class}/fields", locals: { f: f, p: p, r: r } %>
 
 			<%= f.actions %>
 
