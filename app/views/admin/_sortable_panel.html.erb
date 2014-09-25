@@ -10,9 +10,20 @@
 				c = disabled ? collection : collection.positioned
 			%>
 			<% c.each_with_index do |r, i| %>
+			<%
+				if field.class == Symbol
+					field_name = r.send( field )
+				else
+					field_name = r
+
+					field.each do |f|
+						field_name = field_name.send( f )
+					end
+				end
+			%>
 			<li class="<%= i % 2 == 0 ? "odd" : "even" %>" id="sortable_<%= r.id %>">
 				<div class="header">
-					<span><%= r.send field %></span>
+					<span><%= field_name %></span>
 
 					<div class="actions">
 						<%= link_to "delete", [ :admin, r ], remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
