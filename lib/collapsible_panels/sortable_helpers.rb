@@ -1,7 +1,7 @@
 module CollapsiblePanels
   module SortableHelpers
 
-    def sortable_panel(collection, title = nil, field = :name, polymorphic = false, disabled = false)
+    def sortable_panel(collection, title = nil, field = :name, polymorphic = false, disabled = false, editable = true)
       klass = collection.base_class
       class_name = klass.name.underscore
       pluralized_class = class_name.pluralize
@@ -15,8 +15,21 @@ module CollapsiblePanels
         field: field,
         p: p,
         polymorphic: polymorphic,
-        disabled: disabled
+        disabled: disabled,
+        editable: editable
       }
+    end
+
+    def sortable_panel_hash(collection, title = nil, hash = {})
+      opts = {
+        field: :name,
+        polymorphic: false,
+        disabled: false,
+        editable: true
+      }
+      opts.merge! hash
+
+      sortable_panel( collection, title, opts[:field], opts[:polymorphic], opts[:disabled], opts[:editable])
     end
 
     def model_prefix(class_name)

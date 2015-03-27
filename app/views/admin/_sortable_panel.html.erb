@@ -27,7 +27,7 @@
 
 					<div class="actions">
 						<%= link_to "delete", [ :admin, r ], remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
-						<a href="#" class="edit">edit</a>
+						<% if editable %><a href="#" class="edit">edit</a><% end %>
 					</div>
 
 					<div class="grip">
@@ -35,6 +35,7 @@
 					</div>
 				</div>
 
+				<% if editable %>
 				<div class="form">
 					<%= semantic_form_for [ :admin, r ], namespace: "edit_#{r.id}", remote: true do |f| %>
 
@@ -44,10 +45,12 @@
 
 					<% end %>
 				</div>
+				<% end %>
 			</li>
 			<% end %>
 		</ul>
 
+		<% if editable %>
 		<% r = klass.new %>
 		<%= semantic_form_for [ :admin, r ], namespace: "new", remote: true  do |f| %>
 
@@ -67,8 +70,9 @@
 			<%= f.actions %>
 
 		<% end %>
+		<% end %>
 
 	</div>
 </div>
 
-<%= render partial: "admin/#{pluralized_class}/edit_template", locals: { class_name: class_name, pluralized_class: pluralized_class } %>
+<%= render partial: "admin/#{pluralized_class}/edit_template", locals: { class_name: class_name, pluralized_class: pluralized_class } if editable %>
