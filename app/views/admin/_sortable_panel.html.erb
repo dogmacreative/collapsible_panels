@@ -23,7 +23,7 @@
 			%>
 			<li class="<%= i % 2 == 0 ? "odd" : "even" %>" id="sortable_<%= r.id %>">
 				<div class="header">
-					<span><%= field_name.html_safe %></span>
+					<span><%= field_name.html_safe unless field_name.blank? %></span>
 
 					<div class="actions">
 						<%= link_to "delete", [ :admin, r ], remote: true, method: :delete, data: { confirm: "Are you sure?" } %>
